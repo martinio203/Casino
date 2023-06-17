@@ -52,6 +52,18 @@ build CMakeFiles/Kasyno.dir/main.cpp.o: CXX_COMPILER__Kasyno_Debug /Users/martin
   OBJECT_DIR = CMakeFiles/Kasyno.dir
   OBJECT_FILE_DIR = CMakeFiles/Kasyno.dir
 
+build CMakeFiles/Kasyno.dir/method/BlackJack.cpp.o: CXX_COMPILER__Kasyno_Debug /Users/martin/CLion/Kasyno/method/BlackJack.cpp || cmake_object_order_depends_target_Kasyno
+  DEP_FILE = CMakeFiles/Kasyno.dir/method/BlackJack.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fcolor-diagnostics -std=gnu++17
+  OBJECT_DIR = CMakeFiles/Kasyno.dir
+  OBJECT_FILE_DIR = CMakeFiles/Kasyno.dir/method
+
+build CMakeFiles/Kasyno.dir/method/Player.cpp.o: CXX_COMPILER__Kasyno_Debug /Users/martin/CLion/Kasyno/method/Player.cpp || cmake_object_order_depends_target_Kasyno
+  DEP_FILE = CMakeFiles/Kasyno.dir/method/Player.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fcolor-diagnostics -std=gnu++17
+  OBJECT_DIR = CMakeFiles/Kasyno.dir
+  OBJECT_FILE_DIR = CMakeFiles/Kasyno.dir/method
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Kasyno
@@ -60,7 +72,7 @@ build CMakeFiles/Kasyno.dir/main.cpp.o: CXX_COMPILER__Kasyno_Debug /Users/martin
 #############################################
 # Link the executable Kasyno
 
-build Kasyno: CXX_EXECUTABLE_LINKER__Kasyno_Debug CMakeFiles/Kasyno.dir/main.cpp.o
+build Kasyno: CXX_EXECUTABLE_LINKER__Kasyno_Debug CMakeFiles/Kasyno.dir/main.cpp.o CMakeFiles/Kasyno.dir/method/BlackJack.cpp.o CMakeFiles/Kasyno.dir/method/Player.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk
   OBJECT_DIR = CMakeFiles/Kasyno.dir
   POST_BUILD = :

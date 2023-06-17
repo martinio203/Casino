@@ -3,4 +3,4 @@ project(Kasyno)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Kasyno main.cpp)
+add_executable(Kasyno main.cpp method/BlackJack.cpp headers/BlackJack.h method/Player.cpp headers/Player.h)
