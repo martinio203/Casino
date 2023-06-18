@@ -14,8 +14,8 @@ private:
 public:
     Player();
     Player(string name);
-    void setName();
     void setAccountBalance();
+    void updateAccountBalance(int newBalance);
     void loseMoney(int money);
     void wonMoney(int money);
     string getName();

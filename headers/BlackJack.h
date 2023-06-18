@@ -19,6 +19,7 @@ private:
 
 public:
     BlackJack();
+
     vector<Card> cards;
     vector<Card> deck;
     vector<Card> playerHand;
@@ -27,6 +28,7 @@ public:
     void shuffle();
     void dealPlayerCard();
     void dealComputerCard();
+    void clearHands();
     void placeBet();
     int calculatePlayerHand();
     int calculateComputerHand();

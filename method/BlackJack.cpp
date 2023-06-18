@@ -55,23 +55,29 @@ void BlackJack::dealPlayerCard() {
 
 void BlackJack::dealComputerCard() {
     BlackJack::computerHand.push_back(deck.back());
-    if (BlackJack::computerHand.size() == 1)
-        cout << "Komputer dostaje " << BlackJack::computerHand.back().name << endl;
+    cout << "Komputer dostaje " << BlackJack::computerHand.back().name << endl << endl;
     deck.pop_back();
+    if (computerHand.size() == 2) cout << "Komputer posiada "
+        << calculateComputerHand() << " punktów \n";
+}
+
+void BlackJack::clearHands() {
+    playerHand.clear();
+    computerHand.clear();
 }
 
 void BlackJack::placeBet() {
     bool betting = true;
     do {
         cout << "Postaw zaklad: \n";
-        cin >> bet;
-        if (bet > Player::getAccountBalance()) {
-            cout << "Twój bet to " << bet << endl;
+        cin >> BlackJack::bet;
+        if (bet <= Player::getAccountBalance()) {
+            cout << "Twój zakładw to " << bet << endl;
             betting = false;
         }
         else{
             cout << "Nie masz wystarczająco środków, dostępne środki: "
-            << Player::getAccountBalance();
+            << Player::getAccountBalance() << endl;
         }
     } while(betting);
 }
@@ -94,31 +100,39 @@ int BlackJack::calculateComputerHand(){
 
 void BlackJack::dealing(){
     char ch;
+    BlackJack::dealPlayerCard();
     do {
-        BlackJack::dealPlayerCard();
-        cout << "Chcesz dobrać karte? (y/n): \n";
-        cin >> ch;
         if (BlackJack::calculatePlayerHand() < 21) {
             cout << "Aktualnie posiadasz " <<
-                 BlackJack::calculatePlayerHand() <<
-                 " punktów. By wygrać musisz dostać kartę o wartości niższej niż "
-                 << 21 - BlackJack::calculatePlayerHand() << endl;
-        } else if (BlackJack::calculatePlayerHand() > 21) {
-            cout << "Masz o " << BlackJack::calculatePlayerHand() - 21 << " punktów za dużo" << endl;
+                 BlackJack::calculatePlayerHand() << " punkty" << endl;
+            cout << "Chcesz dobrać karte? (y/n): \n";
+            cin >> ch;
+            if (tolower(ch) == 'y') BlackJack::dealPlayerCard();
         }
     } while ((tolower(ch) == 'y' && BlackJack::calculatePlayerHand() < 21));
-    BlackJack::checkWinner();
 }
 
 void BlackJack::checkWinner() {
     if (BlackJack::calculatePlayerHand() > BlackJack::calculateComputerHand()
-        || BlackJack::calculatePlayerHand() == 21){
-        cout << "Wygrałeś! " << bet << " monet\n";
-        Player::wonMoney(bet);
-    } else {
-        cout << "Masz o " << BlackJack::calculateComputerHand()-BlackJack::calculatePlayerHand()
-        << " monet za mało";
+        && BlackJack::calculatePlayerHand() < 21){
+        cout << "Wygrałeś! Masz o "<<
+        BlackJack::calculatePlayerHand() - BlackJack::calculateComputerHand() <<
+        " punktów więcej od komputera \n";
+        Player::wonMoney(BlackJack::bet);
+
+    } else if (BlackJack::calculatePlayerHand() < BlackJack::calculateComputerHand()) {
+        cout << "Przegrałeś! Masz o " << BlackJack::calculateComputerHand()-BlackJack::calculatePlayerHand()
+        << " punktów mniej od komputera \n";
+        Player::loseMoney(BlackJack::bet);
+
+    } else if (BlackJack::calculatePlayerHand() > 21) {
+        cout << "Przegrałeś! Masz o " << BlackJack::calculateComputerHand() - 21
+        << " punktów za dużo \n";
         Player::loseMoney(bet);
+
+    } else if (BlackJack::calculatePlayerHand() == 21) {
+        cout << "Blackjack! Masz 21 punktów \n";
+        Player::wonMoney(bet);
     }
 }
 
@@ -126,24 +140,22 @@ void BlackJack::game() {
     bool gameContinue;
     char ch;
     do {
-        if (Player::getAccountBalance() == 0) {
-            cout << "Nie posiadasz środków do gry. \n";
-            gameContinue = false;
-        } else{
-            BlackJack::shuffle();
-            BlackJack::placeBet();
-            BlackJack::dealComputerCard();
-            BlackJack::dealing();
-            BlackJack::dealComputerCard();
-            BlackJack::checkWinner();
+        BlackJack::shuffle();
+        BlackJack::placeBet();
+        BlackJack::dealComputerCard();
+        BlackJack::dealing();
+        BlackJack::dealComputerCard();
+        BlackJack::checkWinner();
+        cout << "Chcesz zagrać ponownie? (y/n): \n";
+        cin >> ch;
 
-            cout << "Chcesz zagrać ponownie? (y/n): \n";
-            cin >> ch;
-            if (tolower(ch) == 'y') gameContinue = true;
-            else gameContinue = false;
-        }
+        if (tolower(ch) == 'y') {
+            gameContinue = true;
+            deck = cards;
+            clearHands();
+        } else gameContinue = false;
+
     } while (gameContinue);
-
 }
 
 

@@ -1,14 +1,11 @@
 #include "../headers/Player.h"
 
-Player::Player() : name("Nieznany gracz"), accountBalance(10){};
-
-Player::Player(string name){
-    Player::setName();
-    Player::setAccountBalance();
+Player::Player() : name("Gracz"){
+   Player::setAccountBalance();
 }
 
-void Player::setName() {
-    Player::name = name;
+Player::Player(string name) : name(name){
+    Player::setAccountBalance();
 }
 
 void Player::setAccountBalance() {
@@ -17,15 +14,22 @@ void Player::setAccountBalance() {
 }
 
 void Player::loseMoney(int money) {
-    cout << "Przegrałeś " << money << " pieniędzy "
-    << "twoje dostępne konto: " << Player::getAccountBalance();
+    cout << "Przegrałeś " << money << " pieniędzy \n";
     Player::accountBalance -= money;
+    cout << "Twoje dostępne konto: " << Player::getAccountBalance() << endl;
+
+
 }
 
 void Player::wonMoney(int money) {
-    cout << "Wygrałeś " << money << " pieniędzy "
-         << "twoje dostępne konto: " << Player::getAccountBalance();
+    cout << "Wygrałeś " << money << " pieniędzy \n";
     Player::accountBalance += money;
+    cout << "twoje dostępne konto: " << Player::getAccountBalance() << endl;
+
+}
+
+void Player::updateAccountBalance(int newBalance) {
+    Player::accountBalance = newBalance;
 }
 
 string Player::getName(){
