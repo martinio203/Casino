@@ -1,6 +1,3 @@
-//
-// Created by Martin Banaś on 15/06/2023.
-//
 
 #ifndef KASYNO_BLACKJACK_H
 #define KASYNO_BLACKJACK_H
@@ -19,7 +16,6 @@ private:
 
 public:
     BlackJack();
-
     vector<Card> cards;
     vector<Card> deck;
     vector<Card> playerHand;

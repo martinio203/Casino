@@ -1,6 +1,6 @@
 #include "../headers/BlackJack.h"
 
-BlackJack::BlackJack() {
+BlackJack::BlackJack(){
     cards = {
             //pik 0-12
             {"Dwójka - Pik ♠", 2}, {"Trójka - Pik ♠", 3},
@@ -70,7 +70,7 @@ void BlackJack::placeBet() {
     bool betting = true;
     do {
         cout << "Postaw zaklad: \n";
-        cin >> BlackJack::bet;
+        cin >> bet;
         if (bet <= Player::getAccountBalance()) {
             cout << "Twój zakładw to " << bet << endl;
             betting = false;
@@ -119,20 +119,31 @@ void BlackJack::checkWinner() {
         BlackJack::calculatePlayerHand() - BlackJack::calculateComputerHand() <<
         " punktów więcej od komputera \n";
         Player::wonMoney(BlackJack::bet);
+        Player::updateAccountBalance(Player::getAccountBalance() + bet);
+
 
     } else if (BlackJack::calculatePlayerHand() < BlackJack::calculateComputerHand()) {
         cout << "Przegrałeś! Masz o " << BlackJack::calculateComputerHand()-BlackJack::calculatePlayerHand()
         << " punktów mniej od komputera \n";
         Player::loseMoney(BlackJack::bet);
+        Player::updateAccountBalance(Player::getAccountBalance() - bet);
+
 
     } else if (BlackJack::calculatePlayerHand() > 21) {
-        cout << "Przegrałeś! Masz o " << BlackJack::calculateComputerHand() - 21
+        cout << "Przegrałeś! Masz o " << BlackJack::calculatePlayerHand() - 21
         << " punktów za dużo \n";
         Player::loseMoney(bet);
+        Player::updateAccountBalance(Player::getAccountBalance() - bet);
+
 
     } else if (BlackJack::calculatePlayerHand() == 21) {
         cout << "Blackjack! Masz 21 punktów \n";
         Player::wonMoney(bet);
+        Player::updateAccountBalance(Player::getAccountBalance() + bet);
+
+
+    } else if (BlackJack::calculatePlayerHand() == BlackJack::calculateComputerHand()){
+        cout << "Remis! Komputer posiada taką samą liczbę punktów. \n";
     }
 }
 
@@ -153,7 +164,10 @@ void BlackJack::game() {
             gameContinue = true;
             deck = cards;
             clearHands();
-        } else gameContinue = false;
+        } else {
+            gameContinue = false;
+            Player::updateAccountBalance(Player::getAccountBalance());
+        }
 
     } while (gameContinue);
 }

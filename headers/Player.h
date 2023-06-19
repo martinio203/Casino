@@ -11,15 +11,18 @@ class Player {
 private:
     string name;
     int accountBalance;
+
 public:
     Player();
     Player(string name);
     void setAccountBalance();
-    void updateAccountBalance(int newBalance);
+    int updateAccountBalance(int newBalance);
     void loseMoney(int money);
     void wonMoney(int money);
     string getName();
     int getAccountBalance();
+
+
 
 };
 
