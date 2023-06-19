@@ -69,10 +69,10 @@ void BlackJack::clearHands() {
 void BlackJack::placeBet() {
     bool betting = true;
     do {
-        cout << "Postaw zaklad: \n";
+        cout << "Postaw zakład: \n";
         cin >> bet;
         if (bet <= Player::getAccountBalance()) {
-            cout << "Twój zakładw to " << bet << endl;
+            cout << "Twój zakład to " << bet << endl;
             betting = false;
         }
         else{

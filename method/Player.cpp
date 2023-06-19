@@ -21,8 +21,8 @@ void Player::loseMoney(int money) {
 
 void Player::wonMoney(int money) {
     cout << "Wygrałeś " << money << " pieniędzy \n";
+    Player::accountBalance += money;
     cout << "twoje dostępne konto: " << Player::getAccountBalance() << endl;
-    Player::accountBalance = Player::updateAccountBalance(Player::getAccountBalance() + money);
 
 }
 

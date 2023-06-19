@@ -2,6 +2,7 @@
 #include "headers/Player.h"
 #include "headers/BlackJack.h"
 #include "headers/Roulette.h"
+#include "headers/OneArmedBandit.h"
 using namespace std;
 
 int main() {
@@ -14,6 +15,7 @@ int main() {
     Player player(name);
     BlackJack blackjack;
     Roulette roulette;
+    OneArmedBandit onearmedbandit;
     while (shouldContinue){
         cout << "\nPodaj wybór: \n";
 
@@ -31,6 +33,7 @@ int main() {
                 break;
             }
             case 2:{
+                onearmedbandit.game();
                 break;
             }
             case 3:{
