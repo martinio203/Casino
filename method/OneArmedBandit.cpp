@@ -3,20 +3,6 @@
 
 OneArmedBandit::OneArmedBandit() {}
 
-void OneArmedBandit::placeBet(Player &player) {
-    bool betting = true;
-    do {
-        cout << "Postaw zakład: \n";
-        cin >> bet;
-        if (bet <= player.getAccountBalance()) {
-            cout << "Twój zakład to " << bet << endl;
-            betting = false;
-        } else {
-            cout << "Nie masz wystarczająco środków, dostępne środki: "
-                 << player.getAccountBalance() << endl;
-        }
-    } while (betting);
-}
 
 void OneArmedBandit::roll() {
     roller1 = rand() % 10 + 1;
@@ -35,13 +21,13 @@ void OneArmedBandit::displayRolls() {
 void OneArmedBandit::checkWin(Player &player) {
     if (roller1 == roller2 && roller2 == roller3) {
         cout << "Wygrałeś! Trafiłeś 3 identyczne liczby \n";
-        player.wonMoney(OneArmedBandit::bet * 3);
+        player.wonMoney(player.getBet() * 3);
     } else if (roller1 == roller2 || roller2 == roller3 || roller1 == roller3){
         cout << "Wygrałeś! Trafiłeś 2 identyczne liczby \n";
-        player.wonMoney(OneArmedBandit::bet * 2);
+        player.wonMoney(player.getBet() *  2);
     } else {
         cout << "Przegrałeś! Nie trafiłeś żadnej identycznej liczby \n";
-        player.loseMoney(OneArmedBandit::bet);
+        player.loseMoney(player.getBet());
     }
 }
 
@@ -49,13 +35,17 @@ void OneArmedBandit::game(Player &player) {
     char ch;
     bool gameContinue;
     do {
-        OneArmedBandit::placeBet(player);
-        OneArmedBandit::roll();
-        OneArmedBandit::displayRolls();
-        OneArmedBandit::checkWin(player);
+        player.placeBet();
+        roll();
+        displayRolls();
+        checkWin(player);
         cout << "Chcesz zagrać ponownie? (y/n) \n";
         cin >> ch;
-        if  (tolower(ch) == 'y') gameContinue = true;
+        if  (tolower(ch) == 'y' && player.getAccountBalance() > 0) gameContinue = true;
+        else if (tolower(ch) == 'y' && player.getAccountBalance() == 0){
+            cout << "Nie masz pieniędzy na koncie \n";
+            gameContinue = false;
+        }
         else gameContinue = false;
     } while (gameContinue);
 }

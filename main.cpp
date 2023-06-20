@@ -3,6 +3,7 @@
 #include "headers/BlackJack.h"
 #include "headers/Roulette.h"
 #include "headers/OneArmedBandit.h"
+#include "headers/BestPlayers.h"
 using namespace std;
 
 int main() {
@@ -16,6 +17,7 @@ int main() {
     BlackJack blackjack;
     Roulette roulette;
     OneArmedBandit onearmedbandit;
+    BestPlayers bestplayers;
     while (shouldContinue){
         cout << "\nPodaj wybór: \n";
 
@@ -41,7 +43,7 @@ int main() {
                 break;
             }
             case 4:{
-                cout << 4 << endl;
+                bestplayers.readFile();
                 break;
             }
             case 5:{
@@ -49,6 +51,7 @@ int main() {
                 break;
             }
             case 6:{
+                bestplayers.writeToFile(player);
                 shouldContinue = false;
                 break;
             }

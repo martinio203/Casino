@@ -14,11 +14,9 @@ private:
         string name;
     };
     vector<checkColorName> colorName;
-    int bet;
     int randomNumber;
 public:
     Roulette();
-    void placeBet(Player &player);
     string checkNumberColor(int number);
     void spin();
     void checkWinner(char c, Player &player);

@@ -11,7 +11,8 @@ class Player {
 private:
     string name;
     int accountBalance;
-
+    int bet;
+    int totalWonMoney;
 public:
     Player();
     Player(string name);
@@ -21,7 +22,10 @@ public:
     void wonMoney(int money);
     string getName();
     int getAccountBalance();
-
+    int placeBet();
+    int getBet();
+    void calculateWinnings(int money);
+    string playerToWrite();
 
 
 };

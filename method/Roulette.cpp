@@ -15,19 +15,6 @@ Roulette::Roulette() {
     };
 }
 
-void Roulette::placeBet(Player& player) {
-    bool cont = true;
-    do {
-        cout << "Postaw zakład: \n";
-        cin >> bet;
-        if (bet > player.getAccountBalance())
-            cout << "Nie posiadasz środków, posiadane środki: " << player.getAccountBalance() << endl;
-        else {
-            cont = false;
-        }
-    }while (cont);
-}
-
 string Roulette::checkNumberColor(int number) {
     int index;
     for (int i = 0; i < numbers.size(); ++i) {
@@ -40,7 +27,7 @@ string Roulette::checkNumberColor(int number) {
 
 void Roulette::spin() {
     srand((unsigned) time(NULL));
-    Roulette::randomNumber = (rand() % 36);
+    randomNumber = (rand() % 36);
 }
 
 string Roulette::checkPlayerColor(char c) {
@@ -51,19 +38,19 @@ string Roulette::checkPlayerColor(char c) {
 }
 
 void Roulette::checkWinner(char c, Player &player) {
-    if (Roulette::checkPlayerColor(c) == Roulette::checkNumberColor(Roulette::randomNumber)){
-        cout << "Wygrałeś! Postawiłeś kolor " << Roulette::checkPlayerColor(c)
-        << " a komputer wybrał " << Roulette::checkNumberColor(Roulette::randomNumber)
-        << " " << Roulette::randomNumber << endl;
-        player.wonMoney(Roulette::bet);
-    } else if (Roulette::checkPlayerColor(c) == Roulette::checkNumberColor(Roulette::randomNumber)
+    if (checkPlayerColor(c) == checkNumberColor(randomNumber)){
+        cout << "Wygrałeś! Postawiłeś kolor " << checkPlayerColor(c)
+        << " a komputer wybrał " << checkNumberColor(randomNumber)
+        << " " <<randomNumber << endl;
+        player.wonMoney(player.getBet());
+    } else if (checkPlayerColor(c) == checkNumberColor(randomNumber)
     && c == 'g') {
-        player.wonMoney(Roulette::bet * 14);
+        player.wonMoney(player.getBet() * 14);
     }else{
-        cout << "Przegrałeś! Postawiłeś kolor " << Roulette::checkPlayerColor(c)
-             << " a komputer wybrał " << Roulette::checkNumberColor(Roulette::randomNumber)
-             << " " << Roulette::randomNumber << endl;
-        player.loseMoney(Roulette::bet);
+        cout << "Przegrałeś! Postawiłeś kolor " << checkPlayerColor(c)
+             << " a komputer wybrał " << checkNumberColor(randomNumber)
+             << " " << randomNumber << endl;
+        player.loseMoney(player.getBet());
     }
 }
 
@@ -71,16 +58,19 @@ void Roulette::game(Player &player) {
     char c, cont;
     bool gameContinue;
     do {
-        Roulette::placeBet(player);
+        player.placeBet();
         cout << "Wybierz kolor czerwony, czarny albo zielony: (r/b/g) \n";
         cin >> c;
-        Roulette::spin();
-        Roulette::checkWinner(c, player);
+        spin();
+        checkWinner(c, player);
 
         cout << "Chcesz zagrać ponownie? (y/n) \n";
         cin >> cont;
-        if  (tolower(cont) == 'y') gameContinue = true;
-        else gameContinue = false;
+        if  (tolower(cont) == 'y' && player.getAccountBalance() > 0) gameContinue = true;
+        else if (tolower(cont) == 'y' && player.getAccountBalance() == 0){
+            cout << "Nie masz pieniędzy na koncie \n";
+            gameContinue = false;
+        } else gameContinue = false;
     } while (gameContinue);
 }
 
