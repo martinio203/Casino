@@ -15,13 +15,13 @@ Roulette::Roulette() {
     };
 }
 
-void Roulette::placeBet() {
+void Roulette::placeBet(Player& player) {
     bool cont = true;
     do {
         cout << "Postaw zakład: \n";
         cin >> bet;
-        if (bet > Player::getAccountBalance())
-            cout << "Nie posiadasz środków, posiadane środki: " << Player::getAccountBalance() << endl;
+        if (bet > player.getAccountBalance())
+            cout << "Nie posiadasz środków, posiadane środki: " << player.getAccountBalance() << endl;
         else {
             cont = false;
         }
@@ -44,35 +44,38 @@ void Roulette::spin() {
 }
 
 string Roulette::checkPlayerColor(char c) {
-    auto it = std::find_if(colorName.begin(), colorName.end(), [c](const checkColorName& ccn) {
+    auto it = find_if(colorName.begin(), colorName.end(), [c](const checkColorName& ccn) {
         return ccn.chosenName == c;
     });
     return it -> name;
 }
 
-void Roulette::checkWinner(char c) {
+void Roulette::checkWinner(char c, Player &player) {
     if (Roulette::checkPlayerColor(c) == Roulette::checkNumberColor(Roulette::randomNumber)){
         cout << "Wygrałeś! Postawiłeś kolor " << Roulette::checkPlayerColor(c)
         << " a komputer wybrał " << Roulette::checkNumberColor(Roulette::randomNumber)
         << " " << Roulette::randomNumber << endl;
-        Player::wonMoney(Roulette::bet);
-    } else{
+        player.wonMoney(Roulette::bet);
+    } else if (Roulette::checkPlayerColor(c) == Roulette::checkNumberColor(Roulette::randomNumber)
+    && c == 'g') {
+        player.wonMoney(Roulette::bet * 14);
+    }else{
         cout << "Przegrałeś! Postawiłeś kolor " << Roulette::checkPlayerColor(c)
              << " a komputer wybrał " << Roulette::checkNumberColor(Roulette::randomNumber)
              << " " << Roulette::randomNumber << endl;
-        Player::loseMoney(Roulette::bet);
+        player.loseMoney(Roulette::bet);
     }
 }
 
-void Roulette::game() {
+void Roulette::game(Player &player) {
     char c, cont;
     bool gameContinue;
     do {
-        Roulette::placeBet();
+        Roulette::placeBet(player);
         cout << "Wybierz kolor czerwony, czarny albo zielony: (r/b/g) \n";
         cin >> c;
         Roulette::spin();
-        Roulette::checkWinner(c);
+        Roulette::checkWinner(c, player);
 
         cout << "Chcesz zagrać ponownie? (y/n) \n";
         cin >> cont;

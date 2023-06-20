@@ -3,17 +3,17 @@
 
 OneArmedBandit::OneArmedBandit() {}
 
-void OneArmedBandit::placeBet() {
+void OneArmedBandit::placeBet(Player &player) {
     bool betting = true;
     do {
         cout << "Postaw zakład: \n";
         cin >> bet;
-        if (bet <= Player::getAccountBalance()) {
+        if (bet <= player.getAccountBalance()) {
             cout << "Twój zakład to " << bet << endl;
             betting = false;
         } else {
             cout << "Nie masz wystarczająco środków, dostępne środki: "
-                 << Player::getAccountBalance() << endl;
+                 << player.getAccountBalance() << endl;
         }
     } while (betting);
 }
@@ -32,24 +32,27 @@ void OneArmedBandit::displayRolls() {
     cout << " " << roller3 << endl;
 }
 
-void OneArmedBandit::checkWin() {
+void OneArmedBandit::checkWin(Player &player) {
     if (roller1 == roller2 && roller2 == roller3) {
         cout << "Wygrałeś! Trafiłeś 3 identyczne liczby \n";
+        player.wonMoney(OneArmedBandit::bet * 3);
     } else if (roller1 == roller2 || roller2 == roller3 || roller1 == roller3){
         cout << "Wygrałeś! Trafiłeś 2 identyczne liczby \n";
+        player.wonMoney(OneArmedBandit::bet * 2);
     } else {
         cout << "Przegrałeś! Nie trafiłeś żadnej identycznej liczby \n";
+        player.loseMoney(OneArmedBandit::bet);
     }
 }
 
-void OneArmedBandit::game() {
+void OneArmedBandit::game(Player &player) {
     char ch;
     bool gameContinue;
     do {
-        OneArmedBandit::placeBet();
+        OneArmedBandit::placeBet(player);
         OneArmedBandit::roll();
         OneArmedBandit::displayRolls();
-        OneArmedBandit::checkWin();
+        OneArmedBandit::checkWin(player);
         cout << "Chcesz zagrać ponownie? (y/n) \n";
         cin >> ch;
         if  (tolower(ch) == 'y') gameContinue = true;

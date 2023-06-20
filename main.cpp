@@ -29,15 +29,15 @@ int main() {
         cin >> choice;
         switch(choice) {
             case 1: {
-                blackjack.game();
+                blackjack.game(player);
                 break;
             }
             case 2:{
-                onearmedbandit.game();
+                onearmedbandit.game(player);
                 break;
             }
             case 3:{
-                roulette.game();
+                roulette.game(player);
                 break;
             }
             case 4:{

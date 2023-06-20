@@ -21,16 +21,17 @@ public:
     vector<Card> playerHand;
     vector<Card> computerHand;
 
+    void setDeck();
     void shuffle();
     void dealPlayerCard();
     void dealComputerCard();
     void clearHands();
-    void placeBet();
+    void placeBet(Player &player);
     int calculatePlayerHand();
     int calculateComputerHand();
     void dealing();
-    void checkWinner();
-    void game();
+    void checkWinner(Player &player);
+    void game(Player &player);
 
 
 };

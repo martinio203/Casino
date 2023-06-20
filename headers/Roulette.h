@@ -18,11 +18,11 @@ private:
     int randomNumber;
 public:
     Roulette();
-    void placeBet();
+    void placeBet(Player &player);
     string checkNumberColor(int number);
     void spin();
-    void checkWinner(char c);
-    void game();
+    void checkWinner(char c, Player &player);
+    void game(Player &player);
     string checkPlayerColor(char c);
 
 };

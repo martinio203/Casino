@@ -11,11 +11,11 @@ private:
     int roller1, roller2, roller3;
 public:
     OneArmedBandit();
-    void placeBet();
+    void placeBet(Player &player);
     void roll();
     void displayRolls();
-    void checkWin();
-    void game();
+    void checkWin(Player &player);
+    void game(Player &player);
 };
 
 
