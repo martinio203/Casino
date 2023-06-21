@@ -18,6 +18,7 @@ int main() {
     Roulette roulette;
     OneArmedBandit onearmedbandit;
     BestPlayers bestplayers;
+    cout << "Masz " << player.getAccountBalance() << " pieniędzy \n";
     while (shouldContinue){
         cout << "\nPodaj wybór: \n";
 
@@ -31,19 +32,26 @@ int main() {
         cin >> choice;
         switch(choice) {
             case 1: {
-                blackjack.game(player);
+                if (player.getAccountBalance() > 0)
+                    blackjack.game(player);
+                else cout << "Nie możesz zagrać z powodu braku pieniędzy \n";
                 break;
             }
             case 2:{
-                onearmedbandit.game(player);
+                if (player.getAccountBalance() > 0)
+                    onearmedbandit.game(player);
+                else cout << "Nie możesz zagrać z powodu braku pieniędzy \n";
                 break;
             }
             case 3:{
-                roulette.game(player);
+                if (player.getAccountBalance() > 0)
+                    roulette.game(player);
+                else cout << "Nie możesz zagrać z powodu braku pieniędzy \n";
                 break;
             }
             case 4:{
-                bestplayers.readFile();
+                bestplayers.writeToFile(player.playerToWrite());
+                bestplayers.displayBestPlayers();
                 break;
             }
             case 5:{
@@ -51,7 +59,6 @@ int main() {
                 break;
             }
             case 6:{
-                bestplayers.writeToFile(player);
                 shouldContinue = false;
                 break;
             }

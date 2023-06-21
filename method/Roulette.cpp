@@ -42,10 +42,10 @@ void Roulette::checkWinner(char c, Player &player) {
         cout << "Wygrałeś! Postawiłeś kolor " << checkPlayerColor(c)
         << " a komputer wybrał " << checkNumberColor(randomNumber)
         << " " <<randomNumber << endl;
-        player.wonMoney(player.getBet());
+        player.winMoney(player.getBet());
     } else if (checkPlayerColor(c) == checkNumberColor(randomNumber)
     && c == 'g') {
-        player.wonMoney(player.getBet() * 14);
+        player.winMoney(player.getBet() * 14);
     }else{
         cout << "Przegrałeś! Postawiłeś kolor " << checkPlayerColor(c)
              << " a komputer wybrał " << checkNumberColor(randomNumber)
@@ -63,9 +63,10 @@ void Roulette::game(Player &player) {
         cin >> c;
         spin();
         checkWinner(c, player);
-
-        cout << "Chcesz zagrać ponownie? (y/n) \n";
-        cin >> cont;
+        if (player.getAccountBalance() > 0) {
+            cout << "Chcesz zagrać ponownie? (y/n) \n";
+            cin >> cont;
+        }
         if  (tolower(cont) == 'y' && player.getAccountBalance() > 0) gameContinue = true;
         else if (tolower(cont) == 'y' && player.getAccountBalance() == 0){
             cout << "Nie masz pieniędzy na koncie \n";

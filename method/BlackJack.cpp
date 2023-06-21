@@ -108,7 +108,7 @@ void BlackJack::checkWinner(Player &player) {
         cout << "Wygrałeś! Masz o "<<
         calculatePlayerHand() - calculateComputerHand() <<
         " punktów więcej od komputera \n";
-        player.wonMoney(player.getBet());
+        player.winMoney(player.getBet());
 
     } else if (calculatePlayerHand() < calculateComputerHand()) {
         cout << "Przegrałeś! Masz o " << calculateComputerHand() - calculatePlayerHand()
@@ -122,7 +122,7 @@ void BlackJack::checkWinner(Player &player) {
 
     } else if (calculatePlayerHand() == 21) {
         cout << "Blackjack! Masz 21 punktów \n";
-        player.wonMoney(player.getBet());
+        player.winMoney(player.getBet());
 
     } else if (calculatePlayerHand() == calculateComputerHand()){
         cout << "Remis! Komputer posiada taką samą liczbę punktów. \n";
@@ -140,9 +140,11 @@ void BlackJack::game(Player &player) {
         dealComputerCard();
         checkWinner(player);
         clearHands();
-        cout << "Chcesz zagrać ponownie? (y/n): \n";
-        cin >> ch;
 
+        if (player.getAccountBalance() > 0) {
+            cout << "Chcesz zagrać ponownie? (y/n): \n";
+            cin >> ch;
+        }
         if (tolower(ch) == 'y' && player.getAccountBalance() > 0) {
             gameContinue = true;
         } else if (tolower(ch) == 'y' && player.getAccountBalance() == 0){

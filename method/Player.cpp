@@ -19,7 +19,7 @@ void Player::loseMoney(int money) {
     cout << "Twoje dostępne konto: " << getAccountBalance() << endl;
 }
 
-void Player::wonMoney(int money) {
+void Player::winMoney(int money) {
     cout << "Wygrałeś " << money << " pieniędzy \n";
     accountBalance += money;
     cout << "twoje dostępne konto: " << getAccountBalance() << endl;
@@ -43,13 +43,13 @@ int Player::placeBet() {
     do{
         cout << "Postaw zakład: \n";
         cin >> bet;
-        if (bet <= getAccountBalance()) {
+        if (bet <= getAccountBalance() && getAccountBalance() > 0) {
             cout << "Twój zakład to " << bet << endl;
             betting = false;
-        } else {
+        } else if (bet > getAccountBalance() && getAccountBalance() > 0) {
             cout << "Nie masz wystarczająco środków, dostępne środki: "
             << getAccountBalance() << endl;
-        }
+        } else betting = false;
     } while (betting);
     return bet;
 }

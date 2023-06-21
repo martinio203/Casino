@@ -19,7 +19,7 @@ public:
     void setAccountBalance();
     int updateAccountBalance(int newBalance);
     void loseMoney(int money);
-    void wonMoney(int money);
+    void winMoney(int money);
     string getName();
     int getAccountBalance();
     int placeBet();
